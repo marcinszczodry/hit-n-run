@@ -1,5 +1,5 @@
 import { html, render } from 'https://unpkg.com/lit-html?module';
-import { settings } from '../game/__settings__.js';
+import { settings } from '../game/settings.js';
 import { weaponsList } from '../data/weapons.js';
 import '../game/Board.js';
 import './Stats.js';
