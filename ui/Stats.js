@@ -39,7 +39,7 @@ class Stats extends HTMLElement {
                     border-color: rgba(255,255,255,.4);
                 }
                 .stats__player {
-                    background: rgb(${this.player.color});
+                    background: ${this.winner ? `rgb(${this.player.winner.color})` : `rgb(${this.player.color})`};
                 }
                 .stats__weapon {
                     background: #BEBEBE;
@@ -59,7 +59,7 @@ class Stats extends HTMLElement {
                     <li class="stats__health">${this.player.health}</li>
                 </div>
             ` : html`
-                <li class="stats__player">The winner is Team ${this.player.name} who survived with ${this.player.health} health points!</li>
+                <li class="stats__player">The winner is Team ${this.player.winner.name} who survived with ${this.player.winner.health} health points!</li>
             `}
         `;
     }
