@@ -449,16 +449,19 @@ class Board extends HTMLElement {
 
     /* ------ Events ------ */
     listenForPlayerMove() {
-        this.root.addEventListener('click', e=> {
+        const listener = (e) => {
             const player = this._players[this.turn];
             // Ensure that the target is a div, if not find the closest one
             // * Prevents elements that are inside the div, being the target.
             let div = e.target;
+            console.log(div);
             if (div.nodeName !== 'div') div = div.closest('div');
             // Get cell location
             const cell = this.reverse(parseInt(div.getAttribute('data-index')));
             // if player clicked on different than highlighted cell, return.
             if (!this.doesLocationExist(this._highlights, cell)) return;
+            // remove event listener
+            this.root.removeEventListener(e.type, listener);
             // remove highlighted cells
             this.highlights = [];
             // swap weapons if any occured on player's path
@@ -480,8 +483,10 @@ class Board extends HTMLElement {
 
             // detect battle
             this.battle = this.areLocationsNextToEachOther(this._players.map(p=> p.location));
-        });
+        }
+        this.root.addEventListener('click', listener);
     }
+
     dispatchEventBattle(bool) {
         const event = new CustomEvent('battle', { bubbles: true, detail: bool });
         this.dispatchEvent(event);
@@ -494,7 +499,7 @@ class Board extends HTMLElement {
         }});
         this.dispatchEvent(event);
     }
-    
+
     /* ------ HTML & CSS------ */
     template() {
         if (!this.winner) {
