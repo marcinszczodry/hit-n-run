@@ -10,7 +10,8 @@ class Game extends HTMLBodyElement {
     }
     connectedCallback() {
         this.drawUI();
-        /* Create and append button that toggles page background */
+        
+        /* Page's background toggler */
         // Create button
         this.$button = $('<button id="bg-toggler">Toggle background</button>');
         // Style button
@@ -34,8 +35,9 @@ class Game extends HTMLBodyElement {
                 this.$body.css('background-color', 'white')
             }
         });
+        /* // End of Page's background toggler */
 
-
+        /* Create and append button that toggles page background */
         $(this.root).find('game-board').on('battle', e => this.battle = e.detail);
         $(this.root).find('game-board').on('turn', e => this.turn = e.detail);
         const board = $(this.root).find('game-board')[0];
