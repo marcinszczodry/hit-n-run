@@ -14,13 +14,14 @@ class Game extends HTMLBodyElement {
         // Create button
         this.$button = $('<button id="bg-toggler">Toggle background</button>');
         // Style button
-        this.$button.css('position', 'fixed');
-        this.$button.css('top', '20px');
-        this.$button.css('left', '20px');
+        // this.$button.css('float', 'right');
+        this.$button.css('margin-top', '20px');
+        this.$button.css('margin-bottom', '40px');
+        this.$button.css('margin-left', '20px');
         this.$button.css('background', 'grey');
         this.$button.css('color', 'white');
         // Append button to <body>
-        $(this.root).append(this.$button);
+        $(this.root).prepend(this.$button);
         // Listen for click event on $button
         $(this.$button).click(()=>{
             this.$body = $(this.root.host); // <body>
