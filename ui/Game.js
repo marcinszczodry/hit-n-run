@@ -1,6 +1,4 @@
 import { html, render } from 'https://unpkg.com/lit-html?module';
-import { settings } from '../game/settings.js';
-import { weaponsList } from '../data/weapons.js';
 import '../game/Board.js';
 import './Stats.js';
 class Game extends HTMLBodyElement {
@@ -12,9 +10,34 @@ class Game extends HTMLBodyElement {
     }
     connectedCallback() {
         this.drawUI();
+        /* Create and append button that toggles page background */
+        // Create button
+        this.$button = $('<button id="bg-toggler">Toggle background</button>');
+        // Style button
+        this.$button.css('position', 'fixed');
+        this.$button.css('top', '20px');
+        this.$button.css('left', '20px');
+        this.$button.css('background', 'grey');
+        this.$button.css('color', 'white');
+        // Append button to <body>
+        $(this.root).append(this.$button);
+        // Listen for click event on $button
+        $(this.$button).click(()=>{
+            this.$body = $(this.root.host); // <body>
+            this.$currentBackground = this.$body.css('background-color'); // <body>'s background color
+            // if <body>'s background is white, make it black;
+            // othwise, make it black;
+            if (this.$currentBackground === 'rgba(255, 255, 255, 1)' || this.$currentBackground === 'rgb(255, 255, 255)') {
+                this.$body.css('background-color', 'black')
+            } else {
+                this.$body.css('background-color', 'white')
+            }
+        });
+
+
         $(this.root).find('game-board').on('battle', e => this.battle = e.detail);
         $(this.root).find('game-board').on('turn', e => this.turn = e.detail);
-        const board = this.root.querySelector('game-board');
+        const board = $(this.root).find('game-board')[0];
         board.assignTurnToRandomPlayer();
     }
     get battle() {
@@ -30,15 +53,18 @@ class Game extends HTMLBodyElement {
     }
     set turn(p) {
         this._turn = p;
-        this.root.querySelector('game-stats').player = p;
+        $(this.root).find('game-stats')[0].player = p;
         this.drawUI();
     }
     getPlayerResponse() {
-        const board = this.root.querySelector('game-board');
+        let board = $(this.root).find('game-board')[0];
         const btnAttack = $(this.root).find('button[name="attack"]')[0];
         const btnDefend = $(this.root).find('button[name="defend"]')[0];
         $(btnAttack).on('click', () => board.battleAction = 'attack');
         $(btnDefend).on('click', () => board.battleAction = 'defend');
+    }
+    createAppearanceButton() {
+        $()
     }
     drawUI() {
         render(this.template(), this.root);
@@ -51,6 +77,7 @@ class Game extends HTMLBodyElement {
                     margin: 0; padding: 20px;
                     width: 100vw;
                     height: 100vh;
+                    background: white;
                 }
                 game-board, game-stats, div {
                     margin-left: 50%;

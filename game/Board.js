@@ -53,7 +53,7 @@ class Board extends HTMLElement {
         // render
         render(this.template(), this.root);
         // listen for click event on highlighted cells
-        this.listenForPlayerMove();
+        if (!this.battle) this.listenForPlayerMove();
     }
     get battle() {
         return this._battle;
@@ -454,8 +454,9 @@ class Board extends HTMLElement {
             // Ensure that the target is a div, if not find the closest one
             // * Prevents elements that are inside the div, being the target.
             let div = e.target;
-            console.log(div);
             if (div.nodeName !== 'div') div = div.closest('div');
+            // Bug, prevent console error
+            if (!div) return;
             // Get cell location
             const cell = this.reverse(parseInt(div.getAttribute('data-index')));
             // if player clicked on different than highlighted cell, return.
