@@ -39,7 +39,7 @@ class Stats extends HTMLElement {
                     border-color: rgba(255,255,255,.4);
                 }
                 .stats__player {
-                    background: ${this.winner ? `rgb(${this.player.winner.color})` : `rgb(${this.player.color})`};
+                    background: ${this.player.winner ? `rgb(${this.player.winner.color})` : `rgb(${this.player.color})`};
                 }
                 .stats__weapon {
                     background: #BEBEBE;
